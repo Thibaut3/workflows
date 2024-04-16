@@ -61,12 +61,6 @@ jobs:
         run: |
           docker-compose down
 
-      - name: Push test results to GitHub
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: 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
-          branch: main
-          directory: test-results
 
   notify-slack:
     name: Notify on Slack
