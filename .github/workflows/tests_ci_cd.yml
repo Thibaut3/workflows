@@ -48,4 +48,4 @@ jobs:
         status: ${{ job.status }}
         text: "Tests ${{ job.status }} on branch ${{ github.ref }} in repository ${{ github.repository }}"
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK: https://app.slack.com/client/T06UWK152CR/C06UHV42LR0?ssb_vid=.679e657b6db8191a224bf14834a2d4c5
