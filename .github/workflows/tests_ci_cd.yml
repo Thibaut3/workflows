@@ -37,7 +37,7 @@ jobs:
           docker compose down
 
   notify-slack:
-    needs: test
+    needs: deploy
     runs-on: ubuntu-latest
     if: ${{ always() }}
 
