@@ -35,3 +35,17 @@ jobs:
         if: always()
         run: |
           docker compose down
+
+  notify-slack:
+    needs: test
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+
+    steps:
+    - name: Notify on Slack
+      uses: rtCamp/action-slack-notify@v2
+      with:
+        status: ${{ job.status }}
+        text: "Tests ${{ job.status }} on branch ${{ github.ref }} in repository ${{ github.repository }}"
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
