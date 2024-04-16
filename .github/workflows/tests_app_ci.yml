@@ -1,0 +1,13 @@
+name: Test code
+
+on:
+  push:
+    paths:
+      - 'tests/*' 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v2
