@@ -12,20 +12,6 @@ services:
     depends_on:
       - app
 
-  app:
-    image: your-app-image:latest
-    ports:
-      - "5000:5000"
-    networks:
-      - frontend
-      - backend
-    volumes:
-      - ./app:/app
-    environment:
-      - DATABASE_URL=postgres://user:password@postgres:5432/dbname
-    depends_on:
-      - postgres
-
   postgres:
     image: postgres:latest
     environment:
