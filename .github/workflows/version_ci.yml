@@ -34,3 +34,8 @@ jobs:
       - name: Deploy to Cloud
         run: |
           docker-compose up -d
+      
+      - name: Stop container
+         if: always()
+         run: |
+             docker compose down
