@@ -27,10 +27,6 @@ jobs:
         run: |
           pytest
 
-      - name: Start testing container
-        run: |
-          docker compose up --build -d --wait 
-
       - name: Deploy to Cloud
         run: |
           docker-compose up -d
