@@ -28,14 +28,14 @@ jobs:
           pytest
 
       - name: Start testing container
-         run: |
-             docker compose up --build -d --wait 
+        run: |
+          docker compose up --build -d --wait 
 
       - name: Deploy to Cloud
         run: |
           docker-compose up -d
       
       - name: Stop container
-         if: always()
-         run: |
-             docker compose down
+        if: always()
+        run: |
+          docker compose down
