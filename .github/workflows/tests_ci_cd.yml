@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  deploy:
-    name: Deploy to Cloud ${{ matrix.python-version }}
+  build:
+    name: Build and Test
     runs-on: ubuntu-latest
   
     strategy:
@@ -31,25 +31,46 @@ jobs:
         run: |
           pytest
 
+      - name: Archive test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: test-results
+
+  deploy:
+    name: Deploy to Cloud
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Download test results
+        uses: actions/download-artifact@v2
+        with:
+          name: test-results
+          path: test-results
+
       - name: Deploy to Cloud
         run: |
           docker-compose up -d
       
       - name: Stop container
-        if: always()
         run: |
-          docker compose down
+          docker-compose down
 
   notify-slack:
-    needs: deploy
+    name: Notify on Slack
     runs-on: ubuntu-latest
+    needs: deploy
     if: ${{ always() }}
 
     steps:
-    - name: Notify on Slack
-      uses: rtCamp/action-slack-notify@v2
-      with:
-        status: ${{ job.status }}
-        text: "Tests ${{ job.status }} on branch ${{ github.ref }} in repository ${{ github.repository }}"
-      env:
-        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+      - name: Notify on Slack
+        uses: rtCamp/action-slack-notify@v2
+        with:
+          status: ${{ job.status }}
+          text: "Tests ${{ job.status }} on branch ${{ github.ref }} in repository ${{ github.repository }}"
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
