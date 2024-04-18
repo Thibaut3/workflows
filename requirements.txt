@@ -1,2 +1,5 @@
 pytest
 pytest-xdist
+flake8
+pytest
+coverage
