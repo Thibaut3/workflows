@@ -11,5 +11,6 @@ if __name__ == "__main__":
     result_addition = addition(5, 3)
     print("Résultat de l'addition :", result_addition)
 
+
     result_subtraction = subtraction(5, 3)
     print("Résultat de la soustraction :", result_subtraction)
